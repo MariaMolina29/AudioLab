@@ -37,6 +37,15 @@ def draw_spectrogram_3d(spectrogram):
         'camera': {'eye': {'x': 2, 'y': -2, 'z': 1}},
         'dragmode': False 
     },
+    'font': {
+            'family': 'Helvetica Neue', 
+        },
+        'hoverlabel': {
+            'font': {
+                'family': 'Helvetica Neue', 
+                'size': 14 
+             }
+         },
     'hovermode': 'closest',
     'autosize': True,
     # 'margin': {'l': 50, 'r': 50, 't': 50, 'b': 50}
@@ -120,7 +129,7 @@ def draw_spectrogram(spectrogram, pitch_values, time_pitch, formants):
         'hovermode': 'closest',
         'legend': {
             'x': 0.5,
-            'y': -0.2,
+            'y': -0.3,
             'xanchor': 'center',
             'yanchor': 'top',
             'orientation': 'h',
@@ -129,6 +138,12 @@ def draw_spectrogram(spectrogram, pitch_values, time_pitch, formants):
         'font': {
             'family': 'Helvetica Neue', 
         },
+        'hoverlabel': {
+            'font': {
+                'family': 'Helvetica Neue', 
+                'size': 14 
+             }
+         },
         # 'margin': {'l': 50, 'r': 50, 't': 50, 'b': 50},  # Margin en una sola línea
         'autosize': True,
         'dragmode': False 
@@ -170,7 +185,16 @@ def draw_combined_pitch_intensity_contour(pitch_values, time_pitch, intensity):
         'yaxis': {'title': "Frecuencia [Hz]", 'range': [0, 1000]},
         'yaxis2': {'title': "Intesidad [dB]", 'overlaying': 'y', 'side': 'right', 'range': [0, 120]},
         'hovermode': 'closest',
-        'legend': {'x': 0.5, 'y': -0.2, 'xanchor': 'center', 'yanchor': 'top', 'orientation': 'h', 'font': {'size': 10}},
+        'legend': {'x': 0.5, 'y': -0.3, 'xanchor': 'center', 'yanchor': 'top', 'orientation': 'h', 'font': {'size': 10}},
+        'font': {
+            'family': 'Helvetica Neue', 
+        },
+        'hoverlabel': {
+            'font': {
+                'family': 'Helvetica Neue', 
+                'size': 14 
+             }
+         },
         # 'margin': {'l': 50, 'r': 50, 't': 50, 'b': 50},
         'autosize': True,
         'dragmode': False 
@@ -211,6 +235,15 @@ def draw_power_spectrum(frequencies, power):
         'xaxis': {'title': "Frecuencia [Hz]", 'range': [0, 8000]},
         'yaxis': {'title': "Intesidad [dB]"},
         'hovermode': 'closest',
+        'font': {
+            'family': 'Helvetica Neue', 
+        },
+        'hoverlabel': {
+            'font': {
+                'family': 'Helvetica Neue', 
+                'size': 14 
+             }
+         },
         'autosize': True,
         'dragmode': False 
 
@@ -236,8 +269,17 @@ def draw_waveform(time, amplitude):
         'xaxis': {'title': "Tiempo [s]"},
         'yaxis': {'title': "Amplitud",  'range': [-1, 1]},
         'hovermode': 'closest',
-        'legend': {'x': 0.5, 'y': -0.2, 'xanchor': 'center', 'yanchor': 'top', 'orientation': 'h'
+        'legend': {'x': 0.5, 'y': -0.3, 'xanchor': 'center', 'yanchor': 'top', 'orientation': 'h'
         },
+        'font': {
+            'family': 'Helvetica Neue', 
+        },
+        'hoverlabel': {
+            'font': {
+                'family': 'Helvetica Neue', 
+                'size': 14 
+             }
+         },
         # 'margin': {'l': 50, 'r': 50, 't': 50, 'b': 50},
         'autosize': True,
         'dragmode': False 

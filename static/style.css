@@ -402,6 +402,7 @@ label {
     color: var(--primary-color);
     padding: 10px;
     font-family: 'Helvetica Neue';
+    font-size: clamp(13px, 1vw, 17px);
 }
 
 
@@ -567,7 +568,8 @@ input[type="range"]:hover {
 }
 
 .range-marks span {
-    font-size: clamp(15px, 1vw, 20px);
+    font-size: clamp(13px, 1vw, 17px);
+    font-family: 'Helvetica Neue';
 }
 
 .slider-container {
@@ -575,8 +577,8 @@ input[type="range"]:hover {
     display: flex;
     flex-direction: column;
     align-items: center;
-    /* Para que el slider no quede centrado */
     text-align: center;
+    height: 100px;
 }
 
 .title_value {
@@ -779,6 +781,10 @@ input[type="file"]::file-selector-button {
     width: 100%;
 }
 
+/* Seleccionar las herramientas de Plotly */
+.plotly .modebar-btn{
+    font-family: "Helvetica Neue";
+}
 
 /* Estilo para los íconos de la modebar de Plotly */
 .plotly .modebar-btn path {
@@ -826,8 +832,3 @@ input[type="file"]::file-selector-button {
     box-shadow: none !important;  /* Quitar cualquier sombra de enfoque */
 }
 
-
-.js-plotly-plot{
-    font-family: 'Helvetica Neue';
-
-}
