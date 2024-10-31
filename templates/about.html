@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Sobre AudioLab</title>
+
+    <!-- AOS CSS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <!-- CSS -->
+    <link rel="stylesheet" href="../static/style.css">
+
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg">
+            <div class="container-fluid">
+                <a class="brand-title" href="index.html">AudioLab</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#navbarOffcanvas" aria-controls="navbarOffcanvas" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="offcanvas offcanvas-end bg-dark" tabindex="-1" id="navbarOffcanvas" aria-labelledby="navbarOffcanvasLabel">
+                    <div class="offcanvas-header">
+                        <h5 class="offcanvas-title" id="navbarOffcanvasLabel">Menú</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    </div>
+                    <div class="offcanvas-body" data-aos="fade-down">
+                        <ul class="navbar-nav navbar-nav-scroll" style="--bs-scroll-height: 500px;">
+                            <li class="nav-item"><a class="nav-link" href="index.html"><span class="top-animation"></span>Inicio<span class="bottom-animation"></span></a></li>
+                            <li class="nav-item"><a class="nav-link activo" href="about.html"><span class="top-animation"></span>Acerca de<span class="bottom-animation"></span></a></li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <span class="top-animation"></span>Herramientas de analisis<span class="bottom-animation"></span>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-lg-end">
+                                    <li><a class="dropdown-item nav-link" href="wav_analysis.html"><i class="fa-duotone fa-solid fa-file-audio fa-xl"></i><span class="top-animation"></span>Analizar un archivo .wav<span class="bottom-animation"></span></a></li>
+                                    <li><a class="dropdown-item nav-link" href="real_time_analysis.html"><i class="fa-solid fa-microphone"></i><span class="top-animation"></span>Analizar audio en tiempo real<span class="bottom-animation"></span></a></li>
+                                </ul>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <span class="top-animation"></span>Ayuda<span class="bottom-animation"></span>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-lg-end">
+                                    <li><a class="dropdown-item nav-link" href="manual.html" target="_blank"><span class="top-animation"></span><i class="fa-solid fa-book-open"></i>Manual de Uso<span class="bottom-animation"></span></a></li>
+                                    <li><a class="dropdown-item nav-link" href="https://github.com/DreSpy-x/TG_carga.git" target="_blank"><span class="top-animation"></span><i class="fa-brands fa-github"></i>GitHub<span class="bottom-animation"></span></a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="about_section">
+        <div class="container">
+            <h1 class="brand-title">AudioLab</h1>
+            <a href="index.html" class="link_about">Inicio</a>
+        </div>
+    </div>
+
+    <!-- Sección principal del About -->
+    <div class="info-section" data-aos="fade-up">
+        <div class="container">
+            <h2 class="section-title">¿Qué es AudioLab?</h2>
+            <p class="section-description">
+                <strong>AudioLab</strong> es una herramienta interactiva diseñada para facilitar el análisis acústico de señales de audio de manera sencilla y visual.
+                La plataforma permite a los usuarios capturar y analizar sonidos en tiempo real o cargar archivos .wav para un análisis más detallado.
+            </p>
+        </div>
+
+        <div class="container" data-aos="fade-up">
+            <h2 class="section-title">¿Cómo funciona AudioLab?</h2>
+            <p class="section-description">
+                La plataforma utiliza tecnologías avanzadas de procesamiento de audio, como la <strong>Web Audio API</strong> y <strong>WebSockets</strong>, para capturar, procesar y transmitir señales acústicas en tiempo real. La interfaz web se desarrolla en <strong>Python</strong> con <strong>Flask</strong> y <strong>Plotly</strong>, permitiendo una visualización interactiva de gráficos de oscilogramas, espectrogramas, gráficos de intensidad, y más.
+            </p>
+        </div>
+
+        <div class="container" data-aos="fade-up">
+            <h2 class="section-title">¿Por qué usar AudioLab?</h2>
+            <p class="section-description">
+                Ya sea para la investigación académica, el desarrollo de aplicaciones de voz, o simplemente para aprender más sobre el análisis de señales de audio, <strong>AudioLab</strong> ofrece una solución práctica y educativa. La herramienta permite experimentar con las propiedades del sonido en un entorno seguro y fácil de usar.
+            </p>
+        </div>
+
+        <div class="container" data-aos="fade-up">
+            <h2 class="section-title">¿Qué tecnologías utiliza AudioLab?</h2>
+            <ul class="section-description">
+                <li><strong>Python y Flask:</strong> Para la estructura del backend y la transmisión de datos.</li>
+                <li><strong>JavaScript y Web Audio API:</strong> Para la captura y manipulación de señales de audio en tiempo real.</li>
+                <li><strong>Plotly.js:</strong> Para la representación gráfica interactiva de oscilogramas, espectrogramas y más.</li>
+                <li><strong>Parselmouth:</strong> Para el análisis de características acústicas como pitch y formantes.</li>
+                <li><strong>HTML, CSS y AOS:</strong> Para la creación de una interfaz amigable, responsiva y atractiva.</li>
+                <li><strong>WebSockets:</strong> Para la comunicación bidireccional entre el navegador y el servidor.</li>
+            </ul>
+        </div>
+
+        <div class="container" data-aos="fade-up">
+            <h2 class="section-title">Explora y aprende con AudioLab</h2>
+            <p class="section-description">
+                <strong>AudioLab</strong> está diseñado para todas las personas interesadas en el sonido, desde estudiantes y académicos hasta músicos y desarrolladores.
+                Úsalo para tus proyectos de investigación, para experimentar con sonidos naturales, o para analizar la voz humana de una manera completamente nueva.
+            </p>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer" data-aos="fade-up">
+            <div class="container">
+                <div class="footer-contact">
+                    <a class="brand-title" href="index.html"><h2>AudioLab</h2></a>
+                    <p>Trabajo de Grado  2024-03</p>
+                    <p>Andres Felipe Oñate y María Alejandra Molina</p>
+                    <p>Bioingeniería</p>
+                    <p>Pontificia Universidad Javeriana</p>
+                    <p>Bogotá D.C., Colombia</p>
+                </div>
+                <a href="manual.html" target="_blank" class="button"><i class="fa-solid fa-book-open"></i>Ver Manual de Uso</a>
+            </div>
+        </div>    
+    </footer>
+
+    <!-- Bootstrap JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <!-- AOS JavaScript -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>AOS.init();</script>
+</body>
+</html>

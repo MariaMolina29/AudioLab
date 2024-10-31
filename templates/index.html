@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AudioLab</title>
+
+    <!-- AOS CSS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <!-- CSS -->
+    <link rel="stylesheet" href="../static/style.css">
+
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg">
+            <div class="container-fluid">
+                <a class="brand-title" href="index.html">AudioLab</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#navbarOffcanvas" aria-controls="navbarOffcanvas" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="offcanvas offcanvas-end bg-dark" tabindex="-1" id="navbarOffcanvas" aria-labelledby="navbarOffcanvasLabel">
+                    <div class="offcanvas-header">
+                        <h5 class="offcanvas-title" id="navbarOffcanvasLabel">Menú</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    </div>
+                    <div class="offcanvas-body" data-aos="fade-down">
+                        <ul class="navbar-nav navbar-nav-scroll" style="--bs-scroll-height: 500px;">
+                            <li class="nav-item"><a class="nav-link activo" href="index.html"><span class="top-animation"></span>Inicio<span class="bottom-animation"></span></a></li>
+                            <li class="nav-item"><a class="nav-link" href="about.html"><span class="top-animation"></span>Acerca de<span class="bottom-animation"></span></a></li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <span class="top-animation"></span>Herramientas de analisis<span class="bottom-animation"></span>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-lg-end">
+                                    <li><a class="dropdown-item nav-link" href="wav_analysis.html"><i class="fa-duotone fa-solid fa-file-audio fa-xl"></i><span class="top-animation"></span>Analizar un archivo .wav<span class="bottom-animation"></span></a></li>
+                                    <li><a class="dropdown-item nav-link" href="real_time_analysis.html"><i class="fa-solid fa-microphone"></i><span class="top-animation"></span>Analizar audio en tiempo real<span class="bottom-animation"></span></a></li>
+                                </ul>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <span class="top-animation"></span>Ayuda<span class="bottom-animation"></span>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-lg-end">
+                                    <li><a class="dropdown-item nav-link" href="manual.html " target="_blank"><span class="top-animation"></span><i class="fa-solid fa-book-open"></i>Manual de Uso<span class="bottom-animation"></span></a></li>
+                                    <li><a class="dropdown-item nav-link" href="https://github.com/DreSpy-x/TG_carga.git" target="_blank"><span class="top-animation"></span><i class="fa-brands fa-github"></i>GitHub<span class="bottom-animation"></span></a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="about_section">
+        <div class="container ">
+            <h1 class="brand-title">AudioLab</h1>
+            <a href="about.html" class="link_about">Acerca de</a>
+        </div>
+    </div>
+
+   <!-- Sección Hero (Encabezado Principal) -->
+    <div class="hero-section" data-aos="zoom-in-up">
+        <div class="container" >
+            <h1 class="hero-title" >¡Bienvenido!</h1>
+            <div class="hero-subtitle">Descubre nuestra herramienta para análisis de audio.</div>
+        </div>
+    </div>
+
+
+    <!-- Sección de información (antes 'Interfaz', ahora 'info')
+    <div id="info" class="info-section">
+        <h2 class="section-title" data-aos="fade-up">¿Qué es AudioLab?</h2>
+        <div class="container">
+            <div>
+                <p class="section-description" data-aos="fade-up">
+                    AudioLab es una herramienta de análisis de audio en línea diseñada para facilitar el estudio profundo de señales acústicas, tanto en tiempo real como a través de archivos de audio en formato .wav. 
+            </div>
+            <div>
+                <p class="section-description" data-aos="fade-up">
+                    Esta plataforma permite a los usuarios capturar audio en vivo desde el micrófono o cargar archivos pregrabados, procesando la señal para ofrecer representaciones visuales interactivas de oscilogramas, espectrogramas, espectros de frecuencia, intensidad y formantes. 
+            </div>
+            <div>
+                <p class="section-description" data-aos="fade-up">
+                    Los resultados pueden descargarse en formatos de texto, gráficos PDF, y archivos de audio .wav para análisis posterior. AudioLab se enfoca en proporcionar una experiencia de análisis completa y precisa, permitiendo ajustar el zoom, sincronizar la reproducción con los gráficos, y visualizar aspectos clave del sonido de manera clara e intuitiva.
+                </p>
+            </div>
+            
+        </div>
+    </div> -->
+
+    <!-- Sección de Opciones de análisis de audio -->
+    <div class="audio-section">
+        <h1 data-aos="fade-up">Opciones de análisis de audio</h1>
+        <div class="buttons" data-aos="fade-up">
+            <a href="real_time_analysis.html" class="button"><i class="fa-solid fa-microphone"></i>Analizar audio en tiempo real</a>
+            <a href="wav_analysis.html" class="button"><i class="fa-duotone fa-solid fa-file-audio fa-xl"></i>Analizar un archivo .wav</a>
+        </div>
+    </div>
+
+    <!-- Sección de enlaces útiles -->
+    <div class="useful-links">
+        <div class="container">
+            <h2 class="section-title" data-aos="fade-up">Enlaces útiles </h2>
+            <p class="manual-description" data-aos="fade-up">Aquí puedes encontrar el manual de uso y acceder al código fuente en GitHub.</p>
+            <div class="link-buttons" data-aos="fade-up">
+                <a href="manual.html" target="_blank" class="button"><i class="fa-solid fa-book-open"></i>Ver Manual de Uso</a>
+                <a href="https://github.com/DreSpy-x/TG_carga.git" class="button github-button" target="_blank"><i class="fa-brands fa-github"></i>Ver Código en GitHub</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer" data-aos="fade-up">
+            <div class="container">
+                <div class="footer-contact">
+                    <a class="brand-title" href="index.html"><h2>AudioLab</h2></a>
+                    <p>Trabajo de Grado  2024-03</p>
+                    <p>Andres Felipe Oñate y María Alejandra Molina</p>
+                    <p>Bioingeniería</p>
+                    <p>Pontificia Universidad Javeriana</p>
+                    <p>Bogotá D.C., Colombia</p>
+                </div>
+                <a href="manual.html" target="_blank" id="manual" class="button"><i class="fa-solid fa-book-open"></i>Ver Manual de Uso</a>
+            </div>
+        </div>    
+    </footer>
+   
+    <!-- Bootstrap JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <!-- AOS JavaScript -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script> AOS.init();</script>
+</body>
+</html>
