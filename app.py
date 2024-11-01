@@ -18,7 +18,6 @@ app.config.update(
     SESSION_COOKIE_SECURE=True,  # Cookies solo se envían por HTTPS
     SESSION_COOKIE_HTTPONLY=True,  # Cookies inaccesibles desde JavaScript
     SESSION_COOKIE_SAMESITE='Lax',  # Evitar envío en solicitudes cruzadas
-    PERMANENT_SESSION_LIFETIME=timedelta(minutes=30),  # Tiempo de vida de la sesión (30 min)
 )
 
 socket_io = SocketIO(app)
