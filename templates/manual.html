@@ -57,8 +57,8 @@
     </header>
 
     <div class="iframe-wrapper">
-        <div id="pdf-viewer"></div>
-    </div>    
+        <iframe src="https://drive.google.com/file/d/18KJnMY9rxlHcCgcPccsXY7KA_s6YHzWs/view?usp=sharing" width="100%" height="600px" allow="autoplay"></iframe>
+    </div>
     
     <!-- Footer -->
     <footer>
@@ -79,30 +79,6 @@
 
     <!-- Bootstrap JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-    <!-- pdfobect JavaScript -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.2.6/pdfobject.min.js"></script>
 
-    <!-- JavaScript -->
-    <script>
-        // URL del PDF
-        let pdfURL = "../static/manual_usuario.pdf";
-    
-        // Configuración de opciones para PDFObject
-        let options = {
-            pdfOpenParams: {
-                view: 'Fit',          // Ajustar el PDF al tamaño de la pantalla
-                toolbar: '1',         // Mostrar la barra de herramientas
-                navpanes: '1',        // Mostrar el panel de navegación
-                scrollbar: '1',       // Permitir la barra de desplazamiento
-                statusbar: '1',       // Mostrar barra de estado
-                messages: '1',        // Mostrar mensajes de error en caso de problemas
-                zoom: '100'           // Nivel de zoom inicial
-            }
-        };
-    
-        // Embebe el PDF en el contenedor
-        PDFObject.embed(pdfURL, "#pdf-viewer", options);
-    </script>
-    
 </body>
 </html>

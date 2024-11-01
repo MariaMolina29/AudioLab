@@ -21,9 +21,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     let save_and_load_button = document.getElementById('save_and_load_button');
     let formats_checkbox = document.getElementById('formats_checkbox');
 
-    Plotly.newPlot('oscilogram', [], { title: "Esperando Datos...", dragmode: false }, { responsive: true, displayModeBar: true, doubleClick: false, showTips: false, modeBarButtons: [['zoom2d', 'pan2d', 'autoScale2d', 'toImage', 'toggleSpikelines']], locale: 'custom', locales: { custom: custom_locale } });
-    Plotly.newPlot('spectrogram', [], { title: "Esperando Datos...", dragmode: false }, { responsive: true, displayModeBar: true, doubleClick: false, showTips: false, modeBarButtons: [['zoom2d', 'pan2d', 'autoScale2d', 'toImage', 'toggleSpikelines']], locale: 'custom', locales: { custom: custom_locale } });
-    Plotly.newPlot('intensity', [], { title: "Esperando Datos...", dragmode: false }, { responsive: true, displayModeBar: true, doubleClick: false, showTips: false, modeBarButtons: [['zoom2d', 'pan2d', 'autoScale2d', 'toImage', 'toggleSpikelines']], locale: 'custom', locales: { custom: custom_locale } });
+    Plotly.newPlot('oscilogram', [], { title: "Esperando Datos...", dragmode: false, font: {family: 'Helvetica Neue'}}, { responsive: true, displayModeBar: true, doubleClick: false, showTips: false, modeBarButtons: [['zoom2d', 'pan2d', 'autoScale2d', 'toImage', 'toggleSpikelines']], locale: 'custom', locales: { custom: custom_locale } });
+    Plotly.newPlot('spectrogram', [], { title: "Esperando Datos...", dragmode: false, font: {family: 'Helvetica Neue'} }, { responsive: true, displayModeBar: true, doubleClick: false, showTips: false, modeBarButtons: [['zoom2d', 'pan2d', 'autoScale2d', 'toImage', 'toggleSpikelines']], locale: 'custom', locales: { custom: custom_locale } });
+    Plotly.newPlot('intensity', [], { title: "Esperando Datos...", dragmode: false, font: {family: 'Helvetica Neue'} }, { responsive: true, displayModeBar: true, doubleClick: false, showTips: false, modeBarButtons: [['zoom2d', 'pan2d', 'autoScale2d', 'toImage', 'toggleSpikelines']], locale: 'custom', locales: { custom: custom_locale } });
     
     await confirm_cookies();
     socket = io();
