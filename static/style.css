@@ -362,6 +362,7 @@ header .offcanvas-body .nav-link .top-animation {
 
 
 
+
 .back-section a {
     color: var(--light-color);
     /* Color del texto */
@@ -377,6 +378,15 @@ header .offcanvas-body .nav-link .top-animation {
     text-decoration: none;
     margin-bottom:20px;
 
+}
+
+.lim{
+    display: flex;
+    align-items: center;
+}
+.lim p{
+    color: var(--dark-color);
+    
 }
 
 /* Estilo para los íconos */
