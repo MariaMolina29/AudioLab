@@ -137,8 +137,10 @@ def handle_audio_data(data):
         # Convertir los datos de audio en un array de numpy
         combined_audio_queue = np.concatenate([(np.frombuffer(chunk, dtype=np.float32)) for chunk in audio_data_queue])
         combined_audio_queue = (combined_audio_queue * 32767).astype(np.int16)  
+        max_value_queque = np.iinfo(combined_audio_queue.dtype).max
+        combined_audio_queue = combined_audio_queue / max_value_queque
         sound_real_time = parselmouth.Sound(combined_audio_queue, sampling_frequency=sample_rate)
-        data_to_send_real_time= analyze_audio(sound_real_time, True)
+        data_to_send_real_time= analyze_audio(sound_real_time, True, max_value_queque)
         socket_io.emit('plot_data_real_time', data_to_send_real_time)
 
 @socket_io.on('process_wav')
@@ -148,9 +150,10 @@ def handle_process_wav(data):
     # Asegurarse de que los datos sean unidimensionales 
     if len(audio_data_wav.shape) > 1:
         audio_data_wav = audio_data_wav.mean(axis=1)  # Convertir a mono si es estéreo
-
+    max_value_wav = np.iinfo(audio_data_wav.dtype).max
+    audio_data_wav = audio_data_wav / max_value_wav
     sound_wav = parselmouth.Sound(values=audio_data_wav, sampling_frequency=sample_rate)
-    data_to_send_wav  = analyze_audio(sound_wav, False)
+    data_to_send_wav  = analyze_audio(sound_wav, False, max_value_wav)
     socket_io.emit('plot_data_wav', data_to_send_wav)
 
 @socket_io.on('save_data')
@@ -196,8 +199,10 @@ def handle_get_processed_audio():
         audio_file = io.BytesIO()
         wavfile.write(audio_file, sample_rate, combined_audio)
         audio_file.seek(0)
+        max_value_combined = np.iinfo(combined_audio.dtype).max
+        combined_audio = combined_audio / max_value_combined
         sound_save_audio = parselmouth.Sound(combined_audio, sampling_frequency=sample_rate)
-        data_to_send_save_audio= analyze_audio(sound_save_audio, False)
+        data_to_send_save_audio= analyze_audio(sound_save_audio, False, max_value_combined)
 
         data_to_send_auido_data = {
             'plot_data': data_to_send_save_audio,  
