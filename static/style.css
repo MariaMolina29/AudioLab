@@ -383,10 +383,10 @@ header .offcanvas-body .nav-link .top-animation {
 .lim{
     display: flex;
     align-items: center;
+    justify-content: center;
 }
 .lim p{
     color: var(--dark-color);
-    
 }
 
 /* Estilo para los íconos */
