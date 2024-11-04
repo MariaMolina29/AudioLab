@@ -266,7 +266,7 @@ async function confirm_cookies() {
         // Mostrar la alerta de consentimiento de cookies si no hay sesión
         let result = await Swal.fire({
             title: "¿Desea permitir cookies?",
-            text: "Esto permitirá guardar sus datos temporalmente en esta sesión.",
+            text: "Esto permitirá guardar los datos de la sesión temporalmente.",
             showDenyButton: true,
             showConfirmButton: true,
             confirmButtonText: "Permitir",
