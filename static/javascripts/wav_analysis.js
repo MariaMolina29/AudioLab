@@ -29,7 +29,7 @@ function main() {
         title: 'Subir y cargar archivo',
         html: `
             <div class="custom-content">
-                <label for="upload_wav" class="custom-label">Seleccionar archivo .wav</label>
+                <label for="upload_wav" class="custom-label">Seleccionar archivo .wav (límite de 2 minutos)</label>
                 <div class="custom-file-area" id="fileArea">
                     <input type="file" id="upload_wav" class="custom-file-input" accept=".wav">
                 </div>
