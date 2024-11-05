@@ -48,7 +48,7 @@ function main() {
             </div>
         `,
         showConfirmButton: false,  // Puedes ocultar el botón de confirmación para manejarlo manualmente
-        allowOutsideClick: true,
+        allowOutsideClick: false,
         iconHtml: '<i class="fa-solid fa-upload fa-beat"></i>',  // Ícono de subida de archivo con rebote
         customClass: {
             icon: 'custom-icon'
@@ -356,7 +356,7 @@ function syncLineOnClick(spectrogram_data) {
                             }
                             // Actualizar el espectrograma 3D con un plano en el tiempo seleccionado
                             if (spectrogram3DFigure) {
-                                // update3DSpectrogramWithPlane(spectrogram3DFigure, clicked_time);
+                                update3DSpectrogramWithPlane(spectrogram3DFigure, clicked_time);
                             }
                             hide_spinner()
 

@@ -356,7 +356,7 @@ def generate_text_file(time_pitch, pitch_values, intensity, formants_values, spe
     # return text_content
 
 
-def analyze_audio(snd, live, max_value):
+def analyze_audio(snd, live):
 
     # Generar el oscilograma con Plotly
     time = snd.xs()
@@ -383,9 +383,9 @@ def analyze_audio(snd, live, max_value):
     spectrogram = snd.to_spectrogram(window_length=0.1, maximum_frequency=8000)
     times_specspectrogram = spectrogram.xs()
     frecuency_specspectrogram = spectrogram.ys()
-    intensity_spectrogram = (spectrogram.values*max_value)**2
-    intensity_spectrogram[intensity_spectrogram == 0] = np.nan 
-    intensity_spectrogram = 10 * np.log10(intensity_spectrogram)
+    intensity_spectrogram = (spectrogram.values)
+    intensity_spectrogram[spectrogram.values == 0] = np.nan 
+    intensity_spectrogram = 20 * np.log10(intensity_spectrogram/2e-5)
 
 
 
@@ -408,15 +408,20 @@ def analyze_audio(snd, live, max_value):
         # Generar el espectro de potencia con Plotly
         spectrum = snd.to_spectrum()
         frequencies = spectrum.xs()
-        real_part = abs(spectrum.values[0, :]*max_value)   # Parte real
-        imaginary_part = abs(spectrum.values[1, :]*max_value )   # Parte imaginaria
-        intensity_spectrum = (np.sqrt(real_part**2 + imaginary_part**2))**2
+        real_part = abs(spectrum.values[0, :])   # Parte real
+        imaginary_part = abs(spectrum.values[1, :])   # Parte imaginaria
+        intensity_spectrum = np.sqrt(real_part**2 + imaginary_part**2)
         intensity_spectrum[intensity_spectrum == 0] = np.nan 
-        intensity_spectrum = 10 * np.log10(intensity_spectrum)
+        intensity_spectrum = 20 * np.log10(intensity_spectrum/2e-5)
         peak_frequency = frequencies[np.nanargmax(intensity_spectrum)]
         print(f"Frecuencia del pico más alto: {peak_frequency} Hz")
         trace_spectrum, layout_spectrum = draw_power_spectrum(frequencies, intensity_spectrum)
- 
+        print(type(spectrogram.values))
+        print(f"Tipo de datos no soportado: {spectrogram.values.dtype}")
+        print(spectrogram.values.shape)
+        print(np.max(spectrogram.values))
+        print(np.min(spectrogram.values))
+
         # Generar el archivo de texto con los datos
         text_content = generate_text_file(time_pitch, pitch_values, intensity, formants_values, spectrogram_data)
         data_to_send = json.dumps({
