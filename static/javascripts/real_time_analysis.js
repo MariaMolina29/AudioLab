@@ -50,7 +50,6 @@ async function start_recording(start_recording_button, stop_recording_button, sa
         // 1. Solicitar acceso al micrófono del usuario
         stream = await navigator.mediaDevices.getUserMedia({ audio: true });
         let response = await emit_message('start_recording');
-        console.log(response)
         // 2. Crear el contexto de audio
         audio_context = new AudioContext({  sampleRate: 16000 });
         console.log("Frecuencia de muestreo:", audio_context.sampleRate);
@@ -140,7 +139,6 @@ function stop_recording(start_recording_button, stop_recording_button, save_and_
     }
     start_recording_button.disabled = false; // Habilitar botón de iniciar
     save_and_load_button.style.display = 'inline-block';
-    console.log("Grabación detenida.");
 }
 
 function update_graphs(plot_data, formats_checkbox) {
@@ -173,7 +171,6 @@ function emit_message(message) {
     return new Promise((resolve, reject) => {
         socket.emit(message)
         socket.on('handle_complete', (response) => {
-            console.log('yaaa')
             if (response) {
                 resolve(response);
             } else {

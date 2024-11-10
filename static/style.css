@@ -368,7 +368,7 @@ header .offcanvas-body .nav-link .top-animation {
     /* Color del texto */
     padding: 10px 20px;
     /* Ajuste del padding del botón */
-    background-color: var(--third-color);
+    background-color: var(--dark-color);
     /* Fondo del botón */
     font-family: 'Helvetica Neue';
     font-size: clamp(13px, 1vw, 20px);
@@ -377,6 +377,7 @@ header .offcanvas-body .nav-link .top-animation {
     border-radius: 5px;
     text-decoration: none;
     margin-bottom:20px;
+    font-weight: 600;
 
 }
 
@@ -401,7 +402,7 @@ i {
 
 /* Efecto hover para el enlace */
 .back-section a:hover {
-    background-color: var(--dark-color);
+    background-color: var(--third-color);
     /* Cambia el color de fondo en hover */
     color: var(--light-color);
     /* Cambia el color del texto en hover */
@@ -521,13 +522,14 @@ button:hover {
     /* Color del texto */
     padding: 10px 20px;
     /* Ajuste del padding del botón */
-    background-color: var(--third-color);
+    background-color: var(--dark-color);
     /* Fondo del botón */
     font-family: 'Helvetica Neue';
     font-size: clamp(13px, 1vw, 20px);
     text-transform: uppercase;
     letter-spacing: 0.1em;
     border-radius: 5px;
+    font-weight: 600;
     /* Bordes redondeados */
     display: flex;
     /* Alinear ícono y texto horizontalmente */
@@ -538,7 +540,7 @@ button:hover {
 
 /* Efecto hover para los botones de descarga */
 .download-section a:hover {
-    background-color: var(--dark-color);
+    background-color: var(--third-color);
     /* Cambia el color de fondo en hover */
     color: var(--light-color);
     /* Cambia el color del texto en hover */
@@ -618,10 +620,11 @@ input[type="range"]:hover {
     /* Color del texto */
     padding: 10px 30px;
     /* Ajuste del padding del botón */
-    background-color: var(--third-color);
+    background-color: var(--dark-color);
     /* Fondo del botón */
     font-family: 'Helvetica Neue';
-    font-size: clamp(13px, 1vw, 20px);
+    font-size: clamp(13px, 1vw, 17px);
+    font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.1em;
     border-radius: 5px;
@@ -635,7 +638,7 @@ input[type="range"]:hover {
 
 /* Efecto hover del botón */
 .custom-button:hover {
-    background-color: var(--dark-color);
+    background-color: var(--third-color);
     /* Cambia el color de fondo en hover */
     color: var(--light-color);
 }
@@ -836,7 +839,7 @@ input[type="file"]::file-selector-button {
 }
 
 .swal2-confirm, .swal2-deny{
-    background-color: gray !important;  /* Cambia el color de fondo a verde */
+    background-color: var(--dark-color) !important;
     border: none !important;
 } 
 

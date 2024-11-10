@@ -50,7 +50,6 @@ def draw_spectrogram_3d(times_specspectrogram, frecuency_specspectrogram, intens
          },
     'hovermode': 'closest',
     'autosize': True,
-    # 'margin': {'l': 50, 'r': 50, 't': 50, 'b': 50}
     }
 
     return trace_spectrogram_3d, layout_spectrogram_3d
@@ -86,12 +85,9 @@ def draw_spectrogram(times_specspectrogram, frecuency_spectrogram, intensity_spe
     }
     
 
-    # Aplicar suavizado a la curva de la frecuencia fundamental
-    # pitch_values = savgol_filter(pitch_values, window_length=11, polyorder=2)
-   
     trace_pitch = [{
-        'x': time_pitch.tolist(),  # Convertir array time_pitch a lista para JSON serializable
-        'y': pitch_values.tolist(),  # Convertir array pitch_values a lista para JSON serializable
+        'x': time_pitch.tolist(),  
+        'y': pitch_values.tolist(), 
         'mode': 'lines+markers',
         'marker': {'size': 3, 'color': 'cyan'},
         'line': {'color': 'cyan'},
@@ -105,15 +101,15 @@ def draw_spectrogram(times_specspectrogram, frecuency_spectrogram, intensity_spe
     formants_values = []
 
    
-    colors = ['olivedrab', 'dodgerblue', 'lightgray'] 
-    for formant_number in range(1, 4):  # Los primeros 3 formantes
+    colors = ['olivedrab', 'dodgerblue', '#414040'] 
+    for formant_number in range(1, 4): 
         formant_values = np.array([np.nan if np.isnan(p) else formants.get_value_at_time(formant_number, t)
                        for p, t in zip(pitch_values, time_pitch)])
         # formant_values = np.array([0 if  p==0 else formants.get_value_at_time(formant_number, t)
         #                 for p, t in zip(pitch_values, time_pitch)])
         trace_formant = [{
-            'x': time_pitch.tolist(),  # Convertir array time_pitch a lista para JSON serializable
-            'y': formant_values.tolist(),  # Convertir array formant_values a lista para JSON serializable
+            'x': time_pitch.tolist(), 
+            'y': formant_values.tolist(), 
             'mode': 'lines+markers',
             'marker': {'size': 2},
             'line': {'dash': 'dash', 'color': colors[formant_number - 1] },
@@ -145,7 +141,6 @@ def draw_spectrogram(times_specspectrogram, frecuency_spectrogram, intensity_spe
                 'size': 14 
              }
          },
-        # 'margin': {'l': 50, 'r': 50, 't': 50, 'b': 50},  # Margin en una sola línea
         'autosize': True,
         'dragmode': False 
 
@@ -156,10 +151,9 @@ def draw_spectrogram(times_specspectrogram, frecuency_spectrogram, intensity_spe
  
 def draw_combined_pitch_intensity_contour(pitch_values, time_pitch, intensity):
  
-    # Traza de la frecuencia fundamental (Pitch)
     trace_pitch = [{
-        'x': time_pitch.tolist(),  # Convertir a lista para ser serializable
-        'y': pitch_values.tolist(),  # Convertir a lista para ser serializable
+        'x': time_pitch.tolist(), 
+        'y': pitch_values.tolist(),  
         'mode': 'lines+markers',
         'marker': {'size': 3, 'color': 'turquoise'},
         'line': {'color': 'turquoise'},
@@ -169,8 +163,8 @@ def draw_combined_pitch_intensity_contour(pitch_values, time_pitch, intensity):
 
     # Curva de intensidad (dB)
     trace_intensity = [{
-        'x': intensity.xs().tolist(),  # Convertir a lista para ser serializable
-        'y': intensity.values.T.flatten().tolist(),  # Convertir a lista para ser serializable
+        'x': intensity.xs().tolist(),  
+        'y': intensity.values.T.flatten().tolist(),  
         'mode': 'lines',
         'line': {'color': 'purple'},
         'name': "Intesidad",
@@ -196,13 +190,11 @@ def draw_combined_pitch_intensity_contour(pitch_values, time_pitch, intensity):
                 'size': 14 
              }
          },
-        # 'margin': {'l': 50, 'r': 50, 't': 50, 'b': 50},
         'autosize': True,
         'dragmode': False 
 
     }
 
-    # Combinar los datos de las trazas
     traces = trace_pitch + trace_intensity
  
     return traces, layout
@@ -383,9 +375,10 @@ def analyze_audio(snd, live):
     spectrogram = snd.to_spectrogram(window_length=0.1, maximum_frequency=8000)
     times_specspectrogram = spectrogram.xs()
     frecuency_specspectrogram = spectrogram.ys()
-    intensity_spectrogram = (spectrogram.values)
-    intensity_spectrogram[spectrogram.values == 0] = np.nan 
-    intensity_spectrogram = 20 * np.log10(intensity_spectrogram/2e-5)
+    psd = spectrogram.values
+    p_ref = 2e-5
+    psd[psd == 0] = np.nan 
+    intensity_spectrogram = 10 * np.log10(psd/(p_ref**2))
 
 
 
@@ -408,19 +401,16 @@ def analyze_audio(snd, live):
         # Generar el espectro de potencia con Plotly
         spectrum = snd.to_spectrum()
         frequencies = spectrum.xs()
+        duration = snd.get_total_duration()
+        p_ref = 2e-5
         real_part = abs(spectrum.values[0, :])   # Parte real
         imaginary_part = abs(spectrum.values[1, :])   # Parte imaginaria
-        intensity_spectrum = np.sqrt(real_part**2 + imaginary_part**2)
-        intensity_spectrum[intensity_spectrum == 0] = np.nan 
-        intensity_spectrum = 20 * np.log10(intensity_spectrum/2e-5)
-        peak_frequency = frequencies[np.nanargmax(intensity_spectrum)]
-        print(f"Frecuencia del pico más alto: {peak_frequency} Hz")
+        magnitude = np.sqrt(real_part**2 + imaginary_part**2)
+        psd = (2* (magnitude**2)) / duration
+        psd[psd == 0] = np.nan 
+        intensity_spectrum = 10 * np.log10(psd/(p_ref**2))
         trace_spectrum, layout_spectrum = draw_power_spectrum(frequencies, intensity_spectrum)
-        print(type(spectrogram.values))
-        print(f"Tipo de datos no soportado: {spectrogram.values.dtype}")
-        print(spectrogram.values.shape)
-        print(np.max(spectrogram.values))
-        print(np.min(spectrogram.values))
+     
 
         # Generar el archivo de texto con los datos
         text_content = generate_text_file(time_pitch, pitch_values, intensity, formants_values, spectrogram_data)

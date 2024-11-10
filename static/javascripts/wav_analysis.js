@@ -137,7 +137,6 @@ function load_wav(upload_wav) {
             let audioContext = new (window.AudioContext || window.webkitAudioContext)();
             audioContext.decodeAudioData(array_buffer, function(buffer) {
                 let duration = buffer.duration;
-                console.log(duration)
                 if (duration > 120) {
                     sweet_alert("Audio demasiado largo", `El archivo "${file.name}" supera los 2 minutos de duración. Por favor, suba un archivo más corto.`, "warning", "OK", undefined, true, false, main);
                 } else {
@@ -356,7 +355,7 @@ function syncLineOnClick(spectrogram_data) {
                             }
                             // Actualizar el espectrograma 3D con un plano en el tiempo seleccionado
                             if (spectrogram3DFigure) {
-                                update3DSpectrogramWithPlane(spectrogram3DFigure, clicked_time);
+                                update3DSpectrogramWithPlane(spectrogram3DFigure, clicked_time, spectrogram_data);
                             }
                             hide_spinner()
 
@@ -401,11 +400,20 @@ function updateSpectrumInTime(spectrumFigure, clicked_time, spectrogram_data) {
         console.error("Plotly container is not initialized or not found.");
     }
 }
-function update3DSpectrogramWithPlane(spectrogram3DFigure, clicked_time) {
-    let maxFrequency = 8000;
-    let minFrequency = 0;
-    let minIntensity = -120;
-    let maxIntensity = 0;
+function update3DSpectrogramWithPlane(spectrogram3DFigure, clicked_time, spectrogram_data) {
+    let powerValues = spectrogram_data.power_values;  // Matriz de potencias/intensidades
+    let maxIntensity = Number.NEGATIVE_INFINITY;
+    let minIntensity = Number.POSITIVE_INFINITY;
+    
+    for (let row of powerValues) {  // Itera sobre las filas de la matriz
+        for (let value of row) {    // Itera sobre los valores de cada fila
+            if (value > maxIntensity) maxIntensity = value;
+            if (value < minIntensity) minIntensity = value;
+        }
+    }
+
+    let maxFrequency = 8000
+    let minFrequency = 0
 
     // Obtener los datos originales del gráfico 3D (filtrando para no incluir planos antiguos)
     // const originalData = plotlyContainer.data.filter(trace => trace.name !== 'Selected Time Plane');
@@ -451,10 +459,20 @@ function addZoomWindow(oscilogramFigure, clicked_time, zoomWindowDuration, click
     // Filtrar los datos para el zoom
     let zoomX = [];
     let zoomY = [];
+    let minX = Number.POSITIVE_INFINITY;
+    let maxX = Number.NEGATIVE_INFINITY;
+    let minY = Number.POSITIVE_INFINITY;
+    let maxY = Number.NEGATIVE_INFINITY;
     for (let i = 0; i < xValues.length; i++) {
         if (xValues[i] >= zoomStart && xValues[i] <= zoomEnd) {
             zoomX.push(xValues[i]);
             zoomY.push(yValues[i]);
+
+            // Calcular mínimos y máximos directamente
+            if (xValues[i] < minX) minX = xValues[i];
+            if (xValues[i] > maxX) maxX = xValues[i];
+            if (yValues[i] < minY) minY = yValues[i];
+            if (yValues[i] > maxY) maxY = yValues[i];
         }
     }
 
@@ -472,8 +490,8 @@ function addZoomWindow(oscilogramFigure, clicked_time, zoomWindowDuration, click
 
     // Trazo del rectángulo como fondo
     let rectTrace = {
-        x: [Math.min(...zoomX), Math.max(...zoomX), Math.max(...zoomX), Math.min(...zoomX), Math.min(...zoomX)],  // Definir las coordenadas X del rectángulo
-        y: [Math.min(...zoomY), Math.min(...zoomY), Math.max(...zoomY), Math.max(...zoomY), Math.min(...zoomY)],  // Definir las coordenadas Y del rectángulo
+        x: [minX, maxX, maxX, minX, minX],  // Definir las coordenadas X del rectángulo
+        y: [minY, minY, maxY, maxY, minY],  // Definir las coordenadas Y del rectángulo
         fill: 'toself',  // Llenar el área del rectángulo
         fillcolor: 'rgba(0, 0, 0, 0.3)',  // Color de fondo con transparencia
         line: {
