@@ -54,7 +54,7 @@ header .offcanvas-title {
 
 header .offcanvas-body {
     flex-direction: row-reverse;
-    z-index: 1040;  
+    z-index: 1040;
 }
 
 header .offcanvas-body .nav-link {
@@ -131,7 +131,7 @@ header .offcanvas-body .nav-link .top-animation {
 
 }
 
-.link_about{
+.link_about {
     font-size: clamp(15px, 1vw, 20px);
     color: var(--secondary-color);
     text-decoration: none;
@@ -163,7 +163,8 @@ header .offcanvas-body .nav-link .top-animation {
 }
 
 .hero-subtitle {
-    font-size: clamp(20px, 3vw, 30px);;
+    font-size: clamp(20px, 3vw, 30px);
+    ;
     font-weight: 300;
     margin-bottom: 40px;
     color: var(--muted-text-color);
@@ -312,7 +313,6 @@ header .offcanvas-body .nav-link .top-animation {
     background-color: rgb(102, 99, 99);
 }
 
-/*Edición del pie de página*/
 
 /* Footer */
 .footer {
@@ -376,17 +376,18 @@ header .offcanvas-body .nav-link .top-animation {
     letter-spacing: 0.1em;
     border-radius: 5px;
     text-decoration: none;
-    margin-bottom:20px;
+    margin-bottom: 20px;
     font-weight: 600;
 
 }
 
-.lim{
+.lim {
     display: flex;
     align-items: center;
     justify-content: center;
 }
-.lim p{
+
+.lim p {
     color: var(--dark-color);
 }
 
@@ -403,9 +404,7 @@ i {
 /* Efecto hover para el enlace */
 .back-section a:hover {
     background-color: var(--third-color);
-    /* Cambia el color de fondo en hover */
     color: var(--light-color);
-    /* Cambia el color del texto en hover */
 }
 
 /* Edición del checkbox de Formantes*/
@@ -466,26 +465,23 @@ label {
 
 }
 
-#tutorial_real_time{
+#tutorial_real_time {
     margin-bottom: 20px;
 }
+
 /* Botón "Iniciar Grabación" - Verde */
 #start_recording {
     background-color: #4CAF50;
-    /* Verde */
-
 }
 
 /* Botón "Detener Grabación" - Rojo */
 #stop_recording {
     background-color: #f44336;
-    /* Rojo */
 }
 
 /* Botón "Guardar y Cargar" - Gris */
 #save_and_load_button {
     background-color: #9E9E9E;
-    /* Gris */
     display: none;
 }
 
@@ -602,9 +598,7 @@ input[type="range"]:hover {
 }
 
 
-/* Personalizar el contenedor principal del SweetAlert */
 
-/* Estilos para el contenido interno */
 .custom-content {
     display: flex;
     flex-direction: column;
@@ -612,7 +606,6 @@ input[type="range"]:hover {
     gap: 15px;
 }
 
-/* Estilo del botón para subir */
 .custom-button {
     border: none;
     cursor: pointer;
@@ -644,10 +637,9 @@ input[type="range"]:hover {
 }
 
 .custom-icon {
-    border: none !important; 
+    border: none !important;
 }
 
-/* Ajuste para que el ícono fa-upload se vea bien */
 .swal2-icon-content .fa-upload {
     font-size: 3rem;
     color: var(--dark-color);
@@ -663,9 +655,13 @@ input[type="range"]:hover {
     justify-content: space-between;
     width: 100%;
 }
-#load_wav, #tutorial_wav, #tutorial_real_time{
+
+#load_wav,
+#tutorial_wav,
+#tutorial_real_time {
     margin-bottom: 20px;
 }
+
 @media screen and (max-width: 530px) {
     .container_buttons {
         display: flex;
@@ -675,6 +671,7 @@ input[type="range"]:hover {
     }
 
 }
+
 .tutorial {
     margin: 0;
     padding: 10px 20px;
@@ -687,7 +684,6 @@ input[type="range"]:hover {
     opacity: 0;
     cursor: pointer;
     position: absolute;
-    /* El input cubre todo el contenedor */
     height: 100%;
 }
 
@@ -720,7 +716,6 @@ input[type="file"]::file-selector-button {
 .custom-file-area.has-file::after {
     font-family: 'Helvetica Neue';
     content: 'Archivo seleccionado: ' attr(data-file-name);
-    /* Combinar texto fijo con el nombre del archivo */
     color: var(--primary-color);
 
 }
@@ -745,27 +740,20 @@ input[type="file"]::file-selector-button {
 
 .spinner_overlay.visible {
     visibility: visible;
-    /* Mostrar el spinner */
     opacity: 1;
-    /* Transición de opacidad */
 }
 
-/* Spinner elegante estilo CSS */
 #spinner {
     border: 6px solid rgba(255, 255, 255, 0.3);
-    /* Color suave para el borde del spinner */
     border-top: 6px solid #fff;
-    /* Borde superior más brillante */
     border-radius: 50%;
     width: 60px;
     height: 60px;
     margin-bottom: 20px;
-    /* Separación con el texto */
 }
 
 #spinner.spin_active {
     animation: spin 1.2s linear infinite;
-    /* Añadir animación solo cuando sea visible */
 }
 
 /* Animación del spinner */
@@ -779,43 +767,40 @@ input[type="file"]::file-selector-button {
     }
 }
 
-    /* Texto debajo del spinner */
-    .spinner_overlay p {
-        color: #fff;
-        font-size: 1.2rem;
-        font-family: 'Helvetica Neue';
-    }
+.spinner_overlay p {
+    color: #fff;
+    font-size: 1.2rem;
+    font-family: 'Helvetica Neue';
+}
 
-    /* Efecto de desenfoque cuando el spinner está visible */
-    .blur {
-        filter: blur(5px);
-        pointer-events: none;
-        transition: filter 0.3s ease;
-    }
+.blur {
+    filter: blur(5px);
+    pointer-events: none;
+    transition: filter 0.3s ease;
+}
 
 #audio_player {
     width: 100%;
 }
 
 /* Seleccionar las herramientas de Plotly */
-.plotly .modebar-btn{
+.plotly .modebar-btn {
     font-family: "Helvetica Neue";
 }
 
 /* Estilo para los íconos de la modebar de Plotly */
 .plotly .modebar-btn path {
     fill: #000000 !important;
-    /* Cambia el color de relleno del ícono a blanco */
 }
 
 .plotly .modebar-btn:hover path {
     fill: #f00 !important;
-    /* Cambia el color de relleno al pasar el mouse, aquí a rojo */
 }
+
 .plotly .modebar-btn.active path {
     fill: #f00 !important;
-    /* Cambia el color de relleno al pasar el mouse, aquí a rojo */
 }
+
 /* Estilos para manual.html */
 .iframe-wrapper {
     display: flex;
@@ -823,28 +808,33 @@ input[type="file"]::file-selector-button {
     align-items: center;
     height: 100vh;
     padding: 1rem;
-    box-sizing: border-box;}
+    box-sizing: border-box;
+}
 
 .pdf-container {
     width: 90%;
-    max-width: 800px; /* Ancho máximo en pantallas grandes */
+    max-width: 800px;
     height: 90vh;
     border: none;
     border: 1px solid #ddd;
     border-radius: 8px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 }
+
 .swal2-popup {
     font-family: 'Helvetica Neue';
 }
 
-.swal2-confirm, .swal2-deny{
+.swal2-confirm,
+.swal2-deny {
     background-color: var(--dark-color) !important;
     border: none !important;
-} 
-
-.swal2-confirm:focus, .swal2-deny:focus {
-    outline: none !important;  /* Quitar el borde de enfoque */
-    box-shadow: none !important;  /* Quitar cualquier sombra de enfoque */
 }
 
+.swal2-confirm:focus,
+.swal2-deny:focus {
+    outline: none !important;
+    /* Quitar el borde de enfoque */
+    box-shadow: none !important;
+    /* Quitar cualquier sombra de enfoque */
+}

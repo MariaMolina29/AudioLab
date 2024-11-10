@@ -161,7 +161,6 @@ async function save_and_load() {
         await wait(3000);
         Swal.close();
         window.location.href = 'wav_analysis.html';
-        // Aquí puedes hacer lo que quieras con la respuesta
     } catch (error) {
         sweet_alert("Grabación vacia", "Por favor, realice una grabación", "error", "OK", undefined, true, false)
     }

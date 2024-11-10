@@ -105,8 +105,6 @@ def draw_spectrogram(times_specspectrogram, frecuency_spectrogram, intensity_spe
     for formant_number in range(1, 4): 
         formant_values = np.array([np.nan if np.isnan(p) else formants.get_value_at_time(formant_number, t)
                        for p, t in zip(pitch_values, time_pitch)])
-        # formant_values = np.array([0 if  p==0 else formants.get_value_at_time(formant_number, t)
-        #                 for p, t in zip(pitch_values, time_pitch)])
         trace_formant = [{
             'x': time_pitch.tolist(), 
             'y': formant_values.tolist(), 
@@ -201,17 +199,6 @@ def draw_combined_pitch_intensity_contour(pitch_values, time_pitch, intensity):
  
 def draw_power_spectrum(frequencies, intensity_spectrum):
    
-    # Verificar que frequencies y power tengan la misma longitud
-    # if len(frequencies) != len(power):
-    #     min_length = min(len(frequencies), len(power))
-    #     frequencies = frequencies[:min_length]
-    #     power = power[:min_length]
-   
-    # valid_idx = np.isfinite(power)
-    # frequencies = frequencies[valid_idx]
-    # power = power[valid_idx]
- 
-    # intensity_spectrum = savgol_filter(intensity_spectrum, window_length=101, polyorder=2)
     trace_spectrum = [{
         'x': frequencies.tolist(),
         'y': intensity_spectrum.tolist(),
@@ -272,7 +259,6 @@ def draw_waveform(time, amplitude):
                 'size': 14 
              }
          },
-        # 'margin': {'l': 50, 'r': 50, 't': 50, 'b': 50},
         'autosize': True,
         'dragmode': False 
 
@@ -289,7 +275,7 @@ def generate_text_file(time_pitch, pitch_values, intensity, formants_values, spe
     output.write("{:<10}/\t{:<15}\t/\t{:<15}\t/\t{:<15}\t/\t{:<15}\t/\t{:<15}\n".format(
         "Tiempo [s]", "Frecuencia [Hz]", "Intesidad [dB]", "Formante 1 [Hz]", "Formante 2 [Hz]", "Formante 3 [Hz]"))
 
-     # Los tiempos del análisis de pitch
+    # tiempos del análisis de pitch
     pitch_frequencies = pitch_values
     
     # Extraer los tiempos e intensidades
@@ -320,33 +306,6 @@ def generate_text_file(time_pitch, pitch_values, intensity, formants_values, spe
     output.close()
    
     return text_content
-    #  Crear el buffer de StringIO para escribir los datos en memoria
-    # output = io.StringIO()
-
-    # # Escribir el encabezado
-    # output.write("{:<10}/\t{:<15}\t/\t{:<15}\n".format(
-    #     "Time [s]","Frequency [Hz]", "Power [dB]"))
-    
-    # times = spectrogram_data['times']
-    # frequencies = spectrogram_data['frequencies']
-    # power_values = spectrogram_data['power_values']  # Matriz Z
-
-    # # Iterar sobre los tiempos y frecuencias para escribir los valores en el buffer
-    # for i, time in enumerate(times):
-    #     for j, freq in enumerate(frequencies):
-    #         # Escribir tiempo, frecuencia y potencia correspondientes en el buffer
-    #         output.write("{:<10.4f}/\t{:<15.2f}\t/\t{:<15.2f}\n".format(
-    #             time, freq, power_values[j][i]))
-
-    # # Obtener el contenido de texto del StringIO
-    # text_content = output.getvalue()
-
-    # # Cerrar el buffer
-    # output.close()
-
-    # # Devolver el contenido de texto para guardarlo o manipularlo
-    # return text_content
-
 
 def analyze_audio(snd, live):
 
@@ -354,13 +313,6 @@ def analyze_audio(snd, live):
     time = snd.xs()
     amplitude = snd.values.flatten()
     trace_oscilogram, layout_oscilogram = draw_waveform(time, amplitude)
-
-    # with open('oscilogram_male.txt', 'w') as archivo:
-    #     archivo.write("{:<10}/\t{:<15}\n".format("Time [s]", "Amplitud"))
-    
-    # # Escribir los valores de tiempo y amplitud
-    #     for t, a in zip(time, amplitude):
-    #         archivo.write("{:<10}/\t{:<15}\n".format(t,a))
 
     # Análisis de Pitch (frecuencia fundamental)
     pitch = snd.to_pitch()
@@ -414,6 +366,7 @@ def analyze_audio(snd, live):
 
         # Generar el archivo de texto con los datos
         text_content = generate_text_file(time_pitch, pitch_values, intensity, formants_values, spectrogram_data)
+
         data_to_send = json.dumps({
             'trace_oscilogram': trace_oscilogram,
             'layout_oscilogram': layout_oscilogram,
@@ -428,20 +381,6 @@ def analyze_audio(snd, live):
             'text_content': text_content,
             'spectrogram_data': spectrogram_data
         }, ignore_nan=True)
-        # data_to_send_git =({
-        #     'trace_oscilogram': trace_oscilogram,
-        #     'layout_oscilogram': layout_oscilogram,
-        #     'trace_spectrogram': trace_spectrogram,
-        #     'layout_spectrogram': layout_spectrogram,
-        #     'trace_intensity': trace_intensity,
-        #     'layout_intensity': layout_intensity,
-        #     'trace_spectrogram_3d': trace_spectrogram_3d,
-        #     'layout_spectrogram_3d': layout_spectrogram_3d,
-        #     'trace_spectrum': trace_spectrum,
-        #     'layout_spectrum': layout_spectrum,
-        # })
-        # with open('data.json', 'w') as json_file:
-        #     json.dump(data_to_send_git,json_file)
 
         return data_to_send
     else:
