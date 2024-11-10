@@ -1,9 +1,5 @@
 import numpy as np
-import plotly.graph_objs as go
-from scipy.signal import savgol_filter
-from parselmouth.praat import call
 import io
-import json
 import simplejson as json
 
 
@@ -345,7 +341,6 @@ def analyze_audio(snd, live):
 
 
     if not live:
-        mean_pitch = call(pitch, "Get mean", 0, 0, "Hertz")
  
         # Generar el espectrograma 3D con Plotly
         trace_spectrogram_3d, layout_spectrogram_3d = draw_spectrogram_3d(times_specspectrogram, frecuency_specspectrogram, intensity_spectrogram)
