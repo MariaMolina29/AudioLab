@@ -21,9 +21,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     let save_and_load_button = document.getElementById('save_and_load_button');
     let formats_checkbox = document.getElementById('formats_checkbox');
 
-    Plotly.newPlot('oscilogram', [], { title: "Esperando Datos...", dragmode: false }, { responsive: true, displayModeBar: true, doubleClick: false, showTips: false, modeBarButtons: [['zoom2d', 'pan2d', 'autoScale2d', 'toImage', 'toggleSpikelines']], locale: 'custom', locales: { custom: custom_locale } });
-    Plotly.newPlot('spectrogram', [], { title: "Esperando Datos...", dragmode: false }, { responsive: true, displayModeBar: true, doubleClick: false, showTips: false, modeBarButtons: [['zoom2d', 'pan2d', 'autoScale2d', 'toImage', 'toggleSpikelines']], locale: 'custom', locales: { custom: custom_locale } });
-    Plotly.newPlot('intensity', [], { title: "Esperando Datos...", dragmode: false }, { responsive: true, displayModeBar: true, doubleClick: false, showTips: false, modeBarButtons: [['zoom2d', 'pan2d', 'autoScale2d', 'toImage', 'toggleSpikelines']], locale: 'custom', locales: { custom: custom_locale } });
+    Plotly.newPlot('oscilogram', [], { title: "Esperando Datos...", dragmode: false, font: {family: 'Helvetica Neue'}}, { responsive: true, displayModeBar: true, doubleClick: false, showTips: false, modeBarButtons: [['zoom2d', 'pan2d', 'autoScale2d', 'toImage', 'toggleSpikelines']], locale: 'custom', locales: { custom: custom_locale } });
+    Plotly.newPlot('spectrogram', [], { title: "Esperando Datos...", dragmode: false, font: {family: 'Helvetica Neue'} }, { responsive: true, displayModeBar: true, doubleClick: false, showTips: false, modeBarButtons: [['zoom2d', 'pan2d', 'autoScale2d', 'toImage', 'toggleSpikelines']], locale: 'custom', locales: { custom: custom_locale } });
+    Plotly.newPlot('intensity', [], { title: "Esperando Datos...", dragmode: false, font: {family: 'Helvetica Neue'} }, { responsive: true, displayModeBar: true, doubleClick: false, showTips: false, modeBarButtons: [['zoom2d', 'pan2d', 'autoScale2d', 'toImage', 'toggleSpikelines']], locale: 'custom', locales: { custom: custom_locale } });
     
     await confirm_cookies();
     socket = io();
@@ -50,7 +50,6 @@ async function start_recording(start_recording_button, stop_recording_button, sa
         // 1. Solicitar acceso al micrófono del usuario
         stream = await navigator.mediaDevices.getUserMedia({ audio: true });
         let response = await emit_message('start_recording');
-        console.log(response)
         // 2. Crear el contexto de audio
         audio_context = new AudioContext({  sampleRate: 16000 });
         console.log("Frecuencia de muestreo:", audio_context.sampleRate);
@@ -140,7 +139,6 @@ function stop_recording(start_recording_button, stop_recording_button, save_and_
     }
     start_recording_button.disabled = false; // Habilitar botón de iniciar
     save_and_load_button.style.display = 'inline-block';
-    console.log("Grabación detenida.");
 }
 
 function update_graphs(plot_data, formats_checkbox) {
@@ -163,7 +161,6 @@ async function save_and_load() {
         await wait(3000);
         Swal.close();
         window.location.href = 'wav_analysis.html';
-        // Aquí puedes hacer lo que quieras con la respuesta
     } catch (error) {
         sweet_alert("Grabación vacia", "Por favor, realice una grabación", "error", "OK", undefined, true, false)
     }
@@ -173,7 +170,6 @@ function emit_message(message) {
     return new Promise((resolve, reject) => {
         socket.emit(message)
         socket.on('handle_complete', (response) => {
-            console.log('yaaa')
             if (response) {
                 resolve(response);
             } else {
@@ -266,7 +262,7 @@ async function confirm_cookies() {
         // Mostrar la alerta de consentimiento de cookies si no hay sesión
         let result = await Swal.fire({
             title: "¿Desea permitir cookies?",
-            text: "Esto permitirá guardar sus datos temporalmente en esta sesión.",
+            text: "Esto permitirá guardar los datos de la sesión temporalmente.",
             showDenyButton: true,
             showConfirmButton: true,
             confirmButtonText: "Permitir",
