@@ -471,13 +471,13 @@ label {
 
 /* Botón "Iniciar Grabación" - Verde */
 #start_recording {
-    background-color: #4CAF50;
+    background-color: #306e32;
     font-weight: 600;
 }
 
 /* Botón "Detener Grabación" - Rojo */
 #stop_recording {
-    background-color: #f44336;
+    background-color: #aa2e25;
     font-weight: 600;
 }
 
