@@ -1,4 +1,4 @@
-from flask import Flask, render_template, session, send_file, request, jsonify
+from flask import Flask, render_template, session, jsonify
 from flask_socketio import SocketIO
 import redis
 import uuid
@@ -7,7 +7,6 @@ import parselmouth
 from audio_analysis import analyze_audio
 import io
 from scipy.io import wavfile
-from datetime import timedelta
 
 
 
@@ -50,7 +49,6 @@ def about():
 
 @app.route('/verificar_sesion', methods=['POST'])
 def verificar_sesion():
-    # Verifica si ya existe un user_id en la sesión
     if 'user_id' in session:
         return jsonify({"usuario_creado": True})
     else:
@@ -58,7 +56,6 @@ def verificar_sesion():
 
 @app.route('/crear_sesion', methods=['POST'])
 def crear_sesion():
-    # Crea una sesión si no existe y el usuario acepta cookies
     if 'user_id' not in session:
         session['user_id'] = str(uuid.uuid4())
         return jsonify({"mensaje": "Sesión creada"})
@@ -113,7 +110,6 @@ def handle_set_sample_rate(data):
     sample_rate = data.get('sample_rate')
     if sample_rate:
         redis_client.set(f'{user_id}_sample_rate', sample_rate)
-        print(f"Frecuencia de muestreo {sample_rate} almacenada para el usuario {user_id}")
 
 @socket_io.on('audio_data')
 def handle_audio_data(data):
@@ -122,7 +118,6 @@ def handle_audio_data(data):
         return
     redis_client.rpush(f'{user_id}_audio_data', data)
     redis_client.rpush(f'{user_id}_data_queue', data)
-    # Limitar el tamaño de la cola (buffersize)
     buffer_size = 5
     data_queue_length = redis_client.llen(f'{user_id}_data_queue')
     if data_queue_length > buffer_size:
@@ -130,11 +125,10 @@ def handle_audio_data(data):
 
     key_data_queue = f'{user_id}_data_queue'
     key_sample_rate= f'{user_id}_sample_rate'
-    audio_data_queue = redis_client.lrange(key_data_queue, 0, -1)  # Obtener todos los elementos de `data_queue`
+    audio_data_queue = redis_client.lrange(key_data_queue, 0, -1)  
     sample_rate = int(redis_client.get(key_sample_rate))
 
     if len(audio_data_queue) > 0 and sample_rate:
-        # Convertir los datos de audio en un array de numpy
         combined_audio_queue = np.concatenate([(np.frombuffer(chunk, dtype=np.float32)) for chunk in audio_data_queue])
         sound_real_time = parselmouth.Sound(combined_audio_queue, sampling_frequency=sample_rate)
         data_to_send_real_time= analyze_audio(sound_real_time, True)
@@ -144,11 +138,9 @@ def handle_audio_data(data):
 def handle_process_wav(data):
     audio_file = io.BytesIO(data)
     sample_rate, audio_data_wav = wavfile.read(audio_file)
-    # Asegurarse de que los datos sean unidimensionales 
     if len(audio_data_wav.shape) > 1:
-        audio_data_wav = audio_data_wav.mean(axis=1).astype(audio_data_wav.dtype)   # Convertir a mono si es estéreo
+        audio_data_wav = audio_data_wav.mean(axis=1).astype(audio_data_wav.dtype)   
     if np.issubdtype(audio_data_wav.dtype, np.integer):
-        # Obtén el valor máximo dependiendo si es signed o unsigned
         if np.issubdtype(audio_data_wav.dtype, np.signedinteger):
             max_value_wav = np.iinfo(audio_data_wav.dtype).max
             audio_data_wav = audio_data_wav / max_value_wav

@@ -47,9 +47,9 @@ function main() {
             </div>
             </div>
         `,
-        showConfirmButton: false,  // Puedes ocultar el botón de confirmación para manejarlo manualmente
+        showConfirmButton: false, 
         allowOutsideClick: false,
-        iconHtml: '<i class="fa-solid fa-upload fa-beat"></i>',  // Ícono de subida de archivo con rebote
+        iconHtml: '<i class="fa-solid fa-upload fa-beat"></i>',  
         customClass: {
             icon: 'custom-icon'
         },
@@ -94,7 +94,7 @@ function main() {
                 update_elements(parsed_data, upload_wav, audio_player, download_wav, download_txt, NaN)
                 Swal.close();
                 cursor(audio_player)
-                syncLineOnClick(parsed_data.spectrogram_data)
+                update_graphs_on_click(parsed_data.spectrogram_data)
                 in_out_formants(formats_checkbox)
             });
             socket.on('plot_save_audio', (data) => {
@@ -103,7 +103,7 @@ function main() {
                 update_elements(parsed_data, upload_wav, audio_player, download_wav, download_txt, data.audio)
                 Swal.close();
                 cursor(audio_player)
-                syncLineOnClick(parsed_data.spectrogram_data)
+                update_graphs_on_click(parsed_data.spectrogram_data)
                 in_out_formants(formats_checkbox)
             });
         }
@@ -129,7 +129,7 @@ function load_wav(upload_wav) {
         }
     
     
-        // Leer el archivo como ArrayBuffer (lo más eficiente para enviar datos binarios)
+        // Leer el archivo como ArrayBuffer 
         let reader = new FileReader();
         reader.onload = function (event) {
             let array_buffer = event.target.result;  // Obtener el contenido del archivo como ArrayBuffer
@@ -137,7 +137,6 @@ function load_wav(upload_wav) {
             let audioContext = new (window.AudioContext || window.webkitAudioContext)();
             audioContext.decodeAudioData(array_buffer, function(buffer) {
                 let duration = buffer.duration;
-                console.log(duration)
                 if (duration > 120) {
                     sweet_alert("Audio demasiado largo", `El archivo "${file.name}" supera los 2 minutos de duración. Por favor, suba un archivo más corto.`, "warning", "OK", undefined, true, false, main);
                 } else {
@@ -197,7 +196,6 @@ function update_elements(parsed_data, upload_wav, audio_player, download_wav, do
                 // Procesar cada gráfica de forma secuencial
                 for (let i = 0; i < plots.length; i++) {
                     try {
-                        // Usar Plotly.toImage para generar la imagen de la gráfica en alta calidad
                         let dataUrl = await Plotly.toImage(plots[i], {format: 'png',width: 1200,  height: 800,scale: 2});
 
                         // Añadir la imagen al PDF manteniendo la proporción
@@ -273,7 +271,6 @@ function cursor(audio_player) {
     if (audio_player) {
         audio_player.addEventListener("timeupdate", function () {
             let current_time = audio_player.currentTime;
-            // Selecciona las gráficas y actualiza la posición de la línea
             let figures2d = document.querySelectorAll(".cursor2d");
             figures2d.forEach((fig) => {
                 if (fig) {
@@ -293,7 +290,7 @@ function cursor(audio_player) {
         });
     }
 }
-function syncLineOnClick(spectrogram_data) {
+function update_graphs_on_click(spectrogram_data) {
 
     let figures2d = document.querySelectorAll(".cursor2d");
     let spectrumFigure = document.querySelector(".cursorEspectro");
@@ -334,20 +331,9 @@ function syncLineOnClick(spectrogram_data) {
                             clicked_time = data.points[0].x;
 
                             // Actualizar todas las gráficas con la nueva línea
-                            figures2d.forEach((fig) => {
-                                if (fig) {
-                                    if (fig.id === 'oscilogram') {
-                                        let zoom_value = zoom_slider.value
-                                        let result = addZoomWindow(fig, clicked_time, parseFloat(zoom_value), true);
-                                        result.layoutUpdate.shapes = [{ type: 'line', x0: clicked_time, x1: clicked_time, y0: 0, y1: 1, xref: 'x', yref: 'paper', line: { color: 'blue', width: 2, dash: 'dash' } }]
-                                        Plotly.addTraces(fig, [result.rectTrace, result.zoomTrace]);
-                                        Plotly.relayout(fig, result.layoutUpdate);
-                                    }
-                                    Plotly.relayout(fig, {
-                                        shapes: [{ type: 'line', x0: clicked_time, x1: clicked_time, y0: 0, y1: 1, xref: 'x', yref: 'paper', line: { color: 'blue', width: 2, dash: 'dash' } }]
-                                    });
-                                }
-                            });
+                            if (figures2d) {
+                                syncLineOnClick(figures2d, clicked_time) 
+                            }
 
                             // Actualizar la gráfica de espectro
                             if (spectrumFigure) {
@@ -356,7 +342,7 @@ function syncLineOnClick(spectrogram_data) {
                             }
                             // Actualizar el espectrograma 3D con un plano en el tiempo seleccionado
                             if (spectrogram3DFigure) {
-                                update3DSpectrogramWithPlane(spectrogram3DFigure, clicked_time);
+                                update3DSpectrogramWithPlane(spectrogram3DFigure, clicked_time, spectrogram_data);
                             }
                             hide_spinner()
 
@@ -370,6 +356,25 @@ function syncLineOnClick(spectrogram_data) {
     });
 
 }
+
+function syncLineOnClick(figures2d, clicked_time) {
+    figures2d.forEach((fig) => {
+        if (fig) {
+            if (fig.id === 'oscilogram') {
+                let zoom_value = zoom_slider.value
+                let result = addZoomWindow(fig, clicked_time, parseFloat(zoom_value), true);
+                result.layoutUpdate.shapes = [{ type: 'line', x0: clicked_time, x1: clicked_time, y0: 0, y1: 1, xref: 'x', yref: 'paper', line: { color: 'blue', width: 2, dash: 'dash' } }]
+                Plotly.addTraces(fig, [result.rectTrace, result.zoomTrace]);
+                Plotly.relayout(fig, result.layoutUpdate);
+            }
+            Plotly.relayout(fig, {
+                shapes: [{ type: 'line', x0: clicked_time, x1: clicked_time, y0: 0, y1: 1, xref: 'x', yref: 'paper', line: { color: 'blue', width: 2, dash: 'dash' } }]
+            });
+        }
+    });
+}
+
+
 function updateSpectrumInTime(spectrumFigure, clicked_time, spectrogram_data) {
     // Extrae los datos del espectrograma
     let times = spectrogram_data.times;
@@ -401,14 +406,21 @@ function updateSpectrumInTime(spectrumFigure, clicked_time, spectrogram_data) {
         console.error("Plotly container is not initialized or not found.");
     }
 }
-function update3DSpectrogramWithPlane(spectrogram3DFigure, clicked_time) {
-    let maxFrequency = 8000;
-    let minFrequency = 0;
-    let minIntensity = -120;
-    let maxIntensity = 0;
+function update3DSpectrogramWithPlane(spectrogram3DFigure, clicked_time, spectrogram_data) {
+    let powerValues = spectrogram_data.power_values;  // Matriz de potencias/intensidades
+    let maxIntensity = Number.NEGATIVE_INFINITY;
+    let minIntensity = Number.POSITIVE_INFINITY;
+    
+    for (let row of powerValues) {  // Itera sobre las filas de la matriz
+        for (let value of row) {    // Itera sobre los valores de cada fila
+            if (value > maxIntensity) maxIntensity = value;
+            if (value < minIntensity) minIntensity = value;
+        }
+    }
 
-    // Obtener los datos originales del gráfico 3D (filtrando para no incluir planos antiguos)
-    // const originalData = plotlyContainer.data.filter(trace => trace.name !== 'Selected Time Plane');
+    let maxFrequency = 8000
+    let minFrequency = 0
+
 
     let planeData = {
         type: 'surface',
@@ -444,21 +456,31 @@ function addZoomWindow(oscilogramFigure, clicked_time, zoomWindowDuration, click
 
 
     // Obtener los datos actuales del gráfico
-    let currentData = oscilogramFigure.data[0] // Asumiendo que es la primera traza del gráfico
+    let currentData = oscilogramFigure.data[0]
     let xValues = currentData.x
     let yValues = currentData.y
 
     // Filtrar los datos para el zoom
     let zoomX = [];
     let zoomY = [];
+    let minX = Number.POSITIVE_INFINITY;
+    let maxX = Number.NEGATIVE_INFINITY;
+    let minY = Number.POSITIVE_INFINITY;
+    let maxY = Number.NEGATIVE_INFINITY;
     for (let i = 0; i < xValues.length; i++) {
         if (xValues[i] >= zoomStart && xValues[i] <= zoomEnd) {
             zoomX.push(xValues[i]);
             zoomY.push(yValues[i]);
+
+            // Calcular mínimos y máximos directamente
+            if (xValues[i] < minX) minX = xValues[i];
+            if (xValues[i] > maxX) maxX = xValues[i];
+            if (yValues[i] < minY) minY = yValues[i];
+            if (yValues[i] > maxY) maxY = yValues[i];
         }
     }
 
-    // Eliminar cualquier traza de zoom anterior (esto evitará la superposición)
+    // Eliminar cualquier traza de zoom anterior 
     let zoomTraceIndex = oscilogramFigure.data.findIndex(trace => trace.name === "Oscilograma Ampliado");
     let rectTraceIndex = oscilogramFigure.data.findIndex(trace => trace.name === "Zoom Area Background");
 
@@ -472,8 +494,8 @@ function addZoomWindow(oscilogramFigure, clicked_time, zoomWindowDuration, click
 
     // Trazo del rectángulo como fondo
     let rectTrace = {
-        x: [Math.min(...zoomX), Math.max(...zoomX), Math.max(...zoomX), Math.min(...zoomX), Math.min(...zoomX)],  // Definir las coordenadas X del rectángulo
-        y: [Math.min(...zoomY), Math.min(...zoomY), Math.max(...zoomY), Math.max(...zoomY), Math.min(...zoomY)],  // Definir las coordenadas Y del rectángulo
+        x: [minX, maxX, maxX, minX, minX],  // Definir las coordenadas X del rectángulo
+        y: [minY, minY, maxY, maxY, minY],  // Definir las coordenadas Y del rectángulo
         fill: 'toself',  // Llenar el área del rectángulo
         fillcolor: 'rgba(0, 0, 0, 0.3)',  // Color de fondo con transparencia
         line: {
@@ -548,9 +570,11 @@ function addZoomWindow(oscilogramFigure, clicked_time, zoomWindowDuration, click
                 },
                 standoff: 0
             }
-
         },
+<<<<<<< HEAD
       
+=======
+>>>>>>> 2622db1b6303854204e93842a980f3a76cdad858
     }
 
     // Agregar el nuevo zoom al gráfico

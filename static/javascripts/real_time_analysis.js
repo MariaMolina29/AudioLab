@@ -162,7 +162,6 @@ async function save_and_load() {
         await wait(3000);
         Swal.close();
         window.location.href = 'wav_analysis.html';
-        // Aquí puedes hacer lo que quieras con la respuesta
     } catch (error) {
         sweet_alert("Grabación vacia", "Por favor, realice una grabación", "error", "OK", undefined, true, false)
     }
@@ -172,7 +171,6 @@ function emit_message(message) {
     return new Promise((resolve, reject) => {
         socket.emit(message)
         socket.on('handle_complete', (response) => {
-            console.log('yaaa')
             if (response) {
                 resolve(response);
             } else {

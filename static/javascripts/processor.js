@@ -1,6 +1,3 @@
-// const AudioWorkletProcessor = globalThis.AudioWorkletProcessor || class {};
-// const registerProcessor = globalThis.registerProcessor || function () {};
-
 class AudioProcessor extends AudioWorkletProcessor {
     constructor() {
         super();
