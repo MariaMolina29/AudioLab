@@ -67,7 +67,7 @@ function main() {
 
             socket.emit('get_processed_audio');
             socket.on('loading', () => {
-                sweet_alert("Datos guardados correctamente", `Los datos se han  subido correctamente. Espere para el procesamiento.`, "success", "", undefined, false, true, null);
+                sweet_alert("Datos cargados correctamente", `Los datos se han cargado correctamente. Espere para el procesamiento.`, "success", "", undefined, false, true, null);
             });
 
             let upload_wav = document.getElementById('upload_wav');
@@ -550,12 +550,7 @@ function addZoomWindow(oscilogramFigure, clicked_time, zoomWindowDuration, click
             }
 
         },
-        // margin: {
-        //     l: 50,
-        //     r: 50,
-        //     t: 50,  // Reducir el margen superior para acercar el título al eje X
-        //     b: 50,
-        // }
+      
     }
 
     // Agregar el nuevo zoom al gráfico

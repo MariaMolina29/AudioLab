@@ -50,15 +50,13 @@ async function start_recording(start_recording_button, stop_recording_button, sa
         // 1. Solicitar acceso al micrófono del usuario
         stream = await navigator.mediaDevices.getUserMedia({ audio: true });
         let response = await emit_message('start_recording');
-        console.log(response)
         // 2. Crear el contexto de audio
         audio_context = new AudioContext({  sampleRate: 16000 });
-        console.log("Frecuencia de muestreo:", audio_context.sampleRate);
         socket.emit('set_sample_rate', { sample_rate: audio_context.sampleRate });
 
         // 3. Cargar el Worklet (archivo `processor.js`) al contexto de audio
         await audio_context.audioWorklet.addModule("/static/javascripts/processor.js");
-
+        sweet_toast("Grabación iniciada")
         // 4. Crear una fuente de audio a partir del micrófono
         let source = audio_context.createMediaStreamSource(stream);
 
@@ -137,10 +135,11 @@ function stop_recording(start_recording_button, stop_recording_button, save_and_
         // Detener todos los tracks del flujo de audio
         stream.getTracks().forEach((track) => track.stop());
         stream = null
+        sweet_toast("Grabación detenida")
+
     }
     start_recording_button.disabled = false; // Habilitar botón de iniciar
     save_and_load_button.style.display = 'inline-block';
-    console.log("Grabación detenida.");
 }
 
 function update_graphs(plot_data, formats_checkbox) {
@@ -157,7 +156,7 @@ function update_graphs(plot_data, formats_checkbox) {
     Plotly.react('spectrogram', parsed_data.trace_spectrogram, parsed_data.layout_spectrogram);
 }
 async function save_and_load() {
-    sweet_alert("Guardando...", `Los datos se están guardando, por favor espere.`, "warning", "", undefined, false, true);
+    sweet_alert("Cargando...", `Los datos se están cargando, por favor espere.`, "warning", "", undefined, false, true);
     try {
         let response = await emit_message("save_data");
         await wait(3000);
@@ -202,6 +201,23 @@ function sweet_alert(title, text, icon, confirmButtonText, timer, showConfirmBut
         };
     }
     Swal.fire(options);
+}
+function sweet_toast(title){
+    let Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 2000,
+        timerProgressBar: false,
+        didOpen: (toast) => {
+          toast.onmouseenter = Swal.stopTimer;
+          toast.onmouseleave = Swal.resumeTimer;
+        }
+      });
+      Toast.fire({
+        icon: "success",
+        title
+    });
 }
 function show_spinner() {
     document.getElementById('spinner_container').classList.add('visible');  // Mostrar el spinner con opacidad
