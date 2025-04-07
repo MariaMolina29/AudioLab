@@ -571,10 +571,6 @@ function addZoomWindow(oscilogramFigure, clicked_time, zoomWindowDuration, click
                 standoff: 0
             }
         },
-<<<<<<< HEAD
-      
-=======
->>>>>>> 2622db1b6303854204e93842a980f3a76cdad858
     }
 
     // Agregar el nuevo zoom al gráfico
